@@ -1,2 +1,1 @@
-# nyt-class-exercise
-In class NYT exercise
+# class-project
