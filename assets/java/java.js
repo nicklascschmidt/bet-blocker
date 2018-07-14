@@ -1,132 +1,207 @@
 
-    var startDate = "2017-02-13";
-    var endDate = "2017-02-13";
-    var apiKey = "bdca922fc5166acd71413f149462c1a2a01766f862a8cbcb93de2b1cd79df47d";
-    var oddsURL = "https://apifootball.com/api/?action=get_odds&from=" + startDate + "&to=" + endDate + "&APIkey=" + apiKey;
-    var headToHeadURL = "https://apifootball.com/api/?action=get_H2H&firstTeam=Chelsea&secondTeam=Arsenal&APIkey=" + apiKey;
+var startDate = "2017-02-13";
+var endDate = "2017-02-13";
+var apiKey = "bdca922fc5166acd71413f149462c1a2a01766f862a8cbcb93de2b1cd79df47d";
+var oddsURL = "https://apifootball.com/api/?action=get_odds&from=" + startDate + "&to=" + endDate + "&APIkey=" + apiKey;
+var headToHeadURL = "https://apifootball.com/api/?action=get_H2H&firstTeam=Chelsea&secondTeam=Arsenal&APIkey=" + apiKey;
 
-    var testURL = "https://apifootball.com/api/?action=get_odds&APIkey=" + apiKey + "&match_id=297289";
+var testURL = "https://apifootball.com/api/?action=get_odds&APIkey=" + apiKey + "&match_id=297289";
 
-    var myEventID = "25861179737";
-    var myLeagueID = "20336";
-    var mashapeURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/2018-07-12";
-    var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
-    var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
+var myEventID = "25861179737";
+var myLeagueID = "20336";
+var mashapeURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/2018-07-12";
+var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
+var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
 
-    var gameArray = [];
-    var gameArrayObjects = [];
-    var gameArrayFinal = [];
-    var foundGame = null;
+var gameArray = [];
+var gameArrayObjects = [];
+var gameArrayFinal = [];
+var foundGame = null;
+var leagueIdArray = ["20406","20470","20335","20322","20358","20333","20370","20336","20334","20372"];
+var leagueImageArray = [
+    "https://vignette.wikia.nocookie.net/thejackie/images/6/66/Premier-League-Logo.png/revision/latest?cb=20131024155152",
+    "http://files.laliga.es/seccion_logos/laliga-v-1200x1200_2018.png",
+    "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png",
+    "https://i.pinimg.com/originals/5a/4e/8d/5a4e8d4d23fea497145b79b51559afd5.jpg",
+    "https://c1.staticflickr.com/1/681/21939206411_1f5b0efed4_b.jpg",
+    "http://1.bp.blogspot.com/-78yKAM5K36I/VAJVBab5MzI/AAAAAAAAD-A/cuujhkfkOwU/s1600/Logo%2BEredivisie%2BNetherlands.png",
+    "https://upload.wikimedia.org/wikipedia/en/0/0d/Chinese_Super_League_Logo_2.png",
+    "https://i.pinimg.com/originals/fa/45/23/fa45234efa3eb16f889858562abd517f.jpg",
+    "https://upload.wikimedia.org/wikipedia/en/thumb/4/42/Campeonato_Brasileiro_S%C3%A9rie_A_logo.png/200px-Campeonato_Brasileiro_S%C3%A9rie_A_logo.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Superliga_2010.svg/1200px-Superliga_2010.svg.png"]
+
+var leagueObjectArray = [];
+
+var mashapeLeagueListURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/leagues";
 
 
-    var result;
-    function pickRandomProperty(obj) {
-        var count = 0;
-        for (var prop in obj)
-            if (Math.random() < 1/++count)
-            result = prop;
-        return result;
+
+// var result;
+// function pickRandomProperty(obj) {
+//     var count = 0;
+//     for (var prop in obj)
+//         if (Math.random() < 1/++count)
+//         result = prop;
+//     return result;
+// }
+
+
+$.ajax({
+    url: mashapeLeagueURL,
+    method: "GET",
+    headers: {
+    "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
     }
+}).then(function(response) {
 
-    function pickProperty(obj) {
+    console.log(response);
+    console.log(response);
+    console.log(Object.values(response));
+    var responseArray = Object.values(response);
+
+
+
+    for (var n=0; n < responseArray.length; n++) {
+        var gameText = responseArray[n].away.name + responseArray[n].home.name + responseArray[n].datetime.value;
+
+        for (var m=-1; m < gameArray.length; m++) {
+            if (gameText === gameArray[m]) {
+                console.log("duplicate found");
+                foundGame = true;
+            }
+        }
+
+        if (foundGame !== true) {
+            gameArray.push(gameText);
+            gameArrayObjects.push(responseArray[n]);
+        }
+        foundGame = null;
 
     }
+    console.log(gameArrayObjects);
 
+
+    for (var n=0; n < 3; n++) {
+        var randomNum = Math.floor(Math.random() * gameArrayObjects.length);
+        console.log(randomNum);
+        gameArrayFinal.push(gameArrayObjects[randomNum]);
+    }
+    console.log(gameArrayFinal);
+});
+
+// Generates the list of leagues using hardcoded IDs
+function getLeagues() {
     $.ajax({
-      url: mashapeLeagueURL,
-      method: "GET",
-      headers: {
-        "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
-      }
-    }).then(function(response) {
-/*
-        pickRandomProperty(response);
+        url: mashapeLeagueListURL,
+        method: "GET",
+        headers: {
+            "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
+        }
+        }).then(function(response) {          
 
+        for (var n=0; n < leagueIdArray.length; n++) {
 
-        console.log(result);
-        console.log(response[result]);
-*/
-        console.log(response);
-        console.log(response);
-        console.log(Object.values(response));
-        var responseArray = Object.values(response);
+            var league = new Object();
+            league.name = response[leagueIdArray[n]].name;
+            league.id = leagueIdArray[n];
+            league.imageURL = leagueImageArray[n];
 
-
-
-        for (var n=0; n < responseArray.length; n++) {
-
-            var gameText = responseArray[n].away.name + responseArray[n].home.name + responseArray[n].datetime.value;
-
-
-            for (var m=-1; m < gameArray.length; m++) {
-                if (gameText === gameArray[m]) {
-                    console.log("duplicate found");
-                    foundGame = true;
-                }
-            }
-
-            if (foundGame !== true) {
-                gameArray.push(gameText);
-                gameArrayObjects.push(responseArray[n]);
-            }
-            foundGame = null;
+            leagueObjectArray.push(league);
 
         }
-        console.log(gameArrayObjects);
+        console.log("league array below");
+        console.log(leagueObjectArray);
 
+        for (var n=0; n < leagueObjectArray.length; n++) {
+            var $leagueImage = $("<img>");
+            $leagueImage.attr("src",leagueObjectArray[n].imageURL);
+            $leagueImage.attr("style","height: 100px");
 
-        for (var n=0; n < 3; n++) {
-            var randomNum = Math.floor(Math.random() * gameArrayObjects.length);
-            console.log(randomNum);
-            gameArrayFinal.push(gameArrayObjects[randomNum]);
+            var $leagueName = $("<span>");
+            $leagueName.text(leagueObjectArray[n].name);
+
+            var $leagueDiv = $("<div>");
+            $leagueDiv.addClass("league-button col-10 col-sm-5");
+            $leagueDiv.attr("style","text-align: center;display: inline-block;padding: 5px;margin: 10px");
+
+            $leagueDiv.append($leagueImage);
+            $leagueDiv.append("<br>");
+            $leagueDiv.append($leagueName);
+
+            $("#leagues-here").append($leagueDiv);
         }
-        console.log(gameArrayFinal);
-
-
-
-
-
-/*
-        for (var n=0; n < 3; n++) {
-            var gameText = responseArray[n].away.name + responseArray[n].home.name + responseArray[n].datetime.value;
-            
-
-            if (foundGame !== null) {
-                
-            }
-            
-
-            var foundGame = null;
-            for ____ {
-                if (foundGame!== null ) {
-                    foundGame = ___
-                }
-            }
-
-            AskedQuestionsKeys.indexOf(long string of game)
-            if game = -1 then it doesn't exist so DO IT
-
-
-
-            
-            console.log(responseArray[n].away.name + " vs. " + responseArray[n].home.name + " at " + responseArray[n].datetime.value + " and the ID is " + responseArray[n].id);
-            var ;
-            if (game[n] === game2||game1 === game3) {
-                if( game2 === game1||game2 === game3) {
-                    if(game3 === game1 || game3 === game2){
-                        getGames();
-                    }
-                }                
-            } else{
-                return;
-            }
-            
-        }*/
-
-//        console.log(response["25870692671"]);
-  //      console.log(response["25862364303"]);
-        
-
     });
+}; // close ajax call
+
+
+
+
+$(document).ready(function () {
+    var matchbutton;
+
+    $("#submit").on("click",function() {
+       
+        event.preventDefault();
+              
+        
+        var ageInput = $("#age-input").val().trim();
+        console.log(ageInput);
+        if (ageInput >= 21) {
+        
+            $(".age-check").hide();
+
+            var ptag = $("<p2>");
+            ptag.text("These are the next three matches from the MLS this week. All of them are available for our clients to place bets. Compulsive gambling affects 1% of the US population. Our resposibility is to make sure gambling remains fun. For that reason, we ask you to answer three questions: Please try and guess the spread for each game. Those odds were compiled by recognized experts. If you can approximate their knowledge, we feel comfortable letting you bet. Everything in moderation!");
+            $("#league-rules").append(ptag);
+
+            getLeagues();
+
+        } else if (ageInput > 0 && ageInput < 21) {
+
+            $(".age-check").hide();
+            $(".alert").text("You are not alloweed to play");
+
+        } else {      
+            $(".alert").text("you have to input an age");
+
+            function hideAgeNotice() {
+                $(".alert").text("");
+            }
+            setTimeout(hideAgeNotice, 1000 * 2);
+        }
+
+
+    }); // closes Submit Button click
+
+    //league button selected 
+    $('body').on('click','.league-button',function() {
+
+        $("#league-display").hide();
+        // show next page
+
+        //var youtubeVideo = $("<div>");
+        //youtubeVideo.attr("src","https://www.youtube.com/embed/J15vfXqnwWw");
+    });
+      
+}); // closes Doc.ready
+
+
+
+
+
+
+
+
+
+// JS for BB4
+var slider = document.getElementById("myRange");
+  var output = document.getElementById("demo");
+  output.innerHTML = slider.value;
+  
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+  }
+
+
 
 
