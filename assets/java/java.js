@@ -13,6 +13,12 @@
     var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
     var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
 
+    var gameArray = [];
+    var gameArrayObjects = [];
+    var gameArrayFinal = [];
+    var foundGame = null;
+
+
     var result;
     function pickRandomProperty(obj) {
         var count = 0;
@@ -41,12 +47,54 @@
         console.log(response[result]);
 */
         console.log(response);
+        console.log(response);
+        console.log(Object.values(response));
         var responseArray = Object.values(response);
-        for (var n=0; n < 3; n++) {
-            var game = responseArray[n].away.name + " vs. " + responseArray[n].home.name + " at " + responseArray[n].datetime.value;
-            var gameNum = n;
 
-            game0
+
+
+        for (var n=0; n < responseArray.length; n++) {
+
+            var gameText = responseArray[n].away.name + responseArray[n].home.name + responseArray[n].datetime.value;
+
+
+            for (var m=-1; m < gameArray.length; m++) {
+                if (gameText === gameArray[m]) {
+                    console.log("duplicate found");
+                    foundGame = true;
+                }
+            }
+
+            if (foundGame !== true) {
+                gameArray.push(gameText);
+                gameArrayObjects.push(responseArray[n]);
+            }
+            foundGame = null;
+
+        }
+        console.log(gameArrayObjects);
+
+
+        for (var n=0; n < 3; n++) {
+            var randomNum = Math.floor(Math.random() * gameArrayObjects.length);
+            console.log(randomNum);
+            gameArrayFinal.push(gameArrayObjects[randomNum]);
+        }
+        console.log(gameArrayFinal);
+
+
+
+
+
+/*
+        for (var n=0; n < 3; n++) {
+            var gameText = responseArray[n].away.name + responseArray[n].home.name + responseArray[n].datetime.value;
+            
+
+            if (foundGame !== null) {
+                
+            }
+            
 
             var foundGame = null;
             for ____ {
@@ -57,10 +105,28 @@
 
             AskedQuestionsKeys.indexOf(long string of game)
             if game = -1 then it doesn't exist so DO IT
-            
+
+
+
             
             console.log(responseArray[n].away.name + " vs. " + responseArray[n].home.name + " at " + responseArray[n].datetime.value + " and the ID is " + responseArray[n].id);
-    
+            var ;
+            if (game[n] === game2||game1 === game3) {
+                if( game2 === game1||game2 === game3) {
+                    if(game3 === game1 || game3 === game2){
+                        getGames();
+                    }
+                }                
+            } else{
+                return;
+            }
+            
+        }*/
+
+//        console.log(response["25870692671"]);
+  //      console.log(response["25862364303"]);
+        
+
     });
 
 
