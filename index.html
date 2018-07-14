@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HW5</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<link href="BB.css" type="text/css" rel="stylesheet">
+    <!-- <link href="BBreset.css" type="text/css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  
+  </head>
+  
+ <body>
+    <script>
+        $(document).ready(function () {
+          var matchbutton;
+            console.log("hi");
+            //$("#start").hide();
+              $("#submit").on("click",function(){
+                event.preventDefault();
+                $("#start").removeClass("start");
+                
+                 var datep=$("#datep").val().trim();
+                 if(datep >= 21){
+                  
+                  $(".age-check").hide();
+                  displayMatches();
+                 }else if(0 <datep < 21){
+                  
+                  console.log("age < 21")
+                  $(".age-check").hide();
+                   $(".alert").text("You are not alloweed to play")
+                   
+                  }
+                  else if(datep===""){
+                    
+                    $(".alert").text("you have to input the age")}
+                 console.log(datep);
+                // console.log(datep);
+                // age=-(moment(x).diff(moment(), "years"));
+          
+              });
+              function displayMatches(){
+                matchbutton=$("<div>");
+               matchbutton.addClass("leagues");
+               matchbutton.attr("src",matches.jpg);
+               console.log("img");
+               $(".football-leagues").prepend(matchbutton);
+
+              }
+            });
+            </script>
+  <div class="age-check">
+    <label for="datep"><b>DOB (MM/DD/YYYY):</b></label>
+    <br><br>
+    <input type="text" id="datep" >
+    <br>
+    <input type="submit" class="w3-button w3-xlarge w3-circle w3-red w3-card-4 " id="submit" value="submit">
+</div>
+<div class="alert">
+
+</div>
+<div class="football-leagues">
+   
+</div>
+    
+      
+     
+  </body>
+</html>
