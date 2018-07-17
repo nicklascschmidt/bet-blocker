@@ -23,11 +23,14 @@ var myLeagueID = "20406";
 var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
 var mashapeLeagueListURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/leagues";
 
-
+var gameResponse;
 var myEventID;
 var currentGameNum = 0;
         
-
+        function getTeamNames() {
+            $("#team1").text(gameResponse[myEventID].home.name);
+            $("#team2").text(gameResponse[myEventID].away.name);      
+          }
         function generateGameId() {
             for(n=0; n<3; n++) {
                 var currentGameObject = gameArrayFinal[n];
@@ -199,7 +202,9 @@ $(document).ready(function () {
             }
       }).then(function(response) {
           console.log("stuff");
-          console.log(response);
+          gameResponse = response;
+          getTeamNames();
+          console.log(gameResponse);
       })       
     });
  }); // closes Doc.ready
@@ -220,7 +225,6 @@ var slider = document.getElementById("myRange");
   slider.oninput = function() {
     output.innerHTML = this.value;
   }
-
 
 
 
