@@ -119,7 +119,6 @@ var currentGameNum = 0;
         console.log(randomNum);
         gameArrayFinal.push(gameArrayObjects[randomNum]);
     }
-
         console.log(gameArrayFinal);
         generateGameId();
         console.log("GameIdArray");
@@ -180,8 +179,15 @@ function getLeagues() {
 $(document).ready(function () {
     
     var matchbutton;
+    // $("#BB4").hide();
+    // $("#BB5").hide();
     $("#player").hide();
-    $(".video-form").hide();
+    $(".slidecontainer").hide();
+    $(".slider-container").hide();
+    // $(".video-form").hide();
+    $(".button").hide();
+    $(".btn-group").hide();
+    $(".final-page").hide();
     // setTimeout(function() {$(".container1").show(1000),$("#title").css({"height":"100px","width":"100%"})},2000)
     $("#submit").on("click",function() {
        
@@ -214,7 +220,7 @@ $(document).ready(function () {
             setTimeout(hideAgeNotice, 1000 * 2);
         }
         $('#league-display').on('click','.league-button',function() {
-            
+                       
             $("#league-display").hide();
             $("#confirm").removeClass("display");
             getTeamNames();
@@ -225,7 +231,20 @@ $(document).ready(function () {
            // var youtubeVideo = $("<iframe>");
            // youtubeVideo.attr("src","https://www.youtube.com/embed/J15vfXqnwWw").css({"width":"500px","height":"300px","autoplay": "encrypted-media"});
            // $(".youtube-video").append(youtubeVideo);
+
+        });
+      
+        $(".button").on("click",function(){
+            $(".slidecontainer").hide();
+           $(".slider-container").hide();
+           $(".btn-group").hide();
+           $(".button").hide();
+           $("#player").hide();
+          $(".final-page").show();
+        });
+
        });
+  
        function videoDisplay() {
         
             myfunction(); 
@@ -238,6 +257,8 @@ $(document).ready(function () {
 
 
 ////////////
+
+        
 function myfunction(){
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -381,12 +402,6 @@ function onYouTubeIframeAPIReady2(homeTeam,awayTeam) {
     
 
  }); // closes Doc.ready
-
-
-
-
-
-
 
 
 
