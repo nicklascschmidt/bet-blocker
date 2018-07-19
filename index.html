@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,11 +16,13 @@
 </head>
 
 <body>
-    
+<br> 
+        <img src="assets/images/titleBanner.png"class="greenLogo">
+        
     <div class="age-check">
         <label for="datep"><b>DOB (MM/DD/YYYY):</b></label>
         <br><br>
-        <input type="text" id="age-input" >
+        <input type="text" id="age-input" placeholder="Type Age">
         <br>
         <input type="submit" class="w3-button w3-xlarge w3-circle w3-red w3-card-4 " id="submit" value="submit">
     </div>
@@ -33,10 +34,23 @@
         <div id="leagues-here" class="row justify-content-around"></div>  
     </div>
 
-    <div class="youtube-video">
-        <iframe width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    
+    <!-- input from team-name function this is place holder form-->
+    <div class="video-form">
+            <form id="search-term">
+                    Entry:
+                    <br>
+                    <input id="query1" type="text">
+                    <input id="query2" type="text">
+                   
+                    <input id="submit1" type="submit" value="Submit">
+                    <!-- onclick="myfunction();return false;"="submit" -->
+                </form>
+     </div>
+     <div class="youtube-video">
+            <div id="player"></div>
+        <!-- <iframe width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
     </div>
-
     <div id="BB4">
         <p4>Game One: Challenge Our Experts</p4>
         <br>
@@ -78,8 +92,3 @@
    
  </body>
 </html>
-
-
-
-
-

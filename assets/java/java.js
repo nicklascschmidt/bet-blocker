@@ -1,14 +1,4 @@
 
-<<<<<<< HEAD
-
-var testURL = "https://apifootball.com/api/?action=get_odds&APIkey=" + apiKey + "&match_id=297289";
-
-var myEventID = "25861179737";
-var myLeagueID = "20336";
-var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
-var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
-=======
->>>>>>> d6899775787b4da84ea0e770b905f121ad809888
 
 var gameArray = [];
 var gameArrayObjects = [];
@@ -91,14 +81,10 @@ var currentGameNum = 0;
         console.log(randomNum);
         gameArrayFinal.push(gameArrayObjects[randomNum]);
     }
-<<<<<<< HEAD
-    console.log(gameArrayFinal);
 
-=======
         console.log(gameArrayFinal);
         generateGameId();
         console.log(gameIdArray);
->>>>>>> d6899775787b4da84ea0e770b905f121ad809888
 
 });
 
@@ -134,9 +120,9 @@ function getLeagues() {
             $leagueName.text(leagueObjectArray[n].name);
 
             var $leagueDiv = $("<div>");
-            $leagueDiv.addClass("league-button col-10 col-sm-5");
+            $leagueDiv.addClass("league-button ");
             $leagueDiv.attr("style","text-align: center;display: inline-block;padding: 5px;margin: 10px");
-
+            $leagueDiv.css({"width":"20%","height":"15%"});
             $leagueDiv.append($leagueImage);
             $leagueDiv.append("<br>");
             $leagueDiv.append($leagueName);
@@ -150,8 +136,11 @@ function getLeagues() {
 
 
 $(document).ready(function () {
+    
     var matchbutton;
-
+    $("#player").hide();
+    $(".video-form").hide();
+    // setTimeout(function() {$(".container1").show(1000),$("#title").css({"height":"100px","width":"100%"})},2000)
     $("#submit").on("click",function() {
        
         event.preventDefault();
@@ -182,9 +171,93 @@ $(document).ready(function () {
             }
             setTimeout(hideAgeNotice, 1000 * 2);
         }
+        $('#league-display').on('click','.league-button',function() {
+            $(".video-form").show();
+           $("#league-display").hide();
+           $("#player").show();
+           
+           // show next page
+          
+           // var youtubeVideo = $("<iframe>");
+           // youtubeVideo.attr("src","https://www.youtube.com/embed/J15vfXqnwWw").css({"width":"500px","height":"300px","autoplay": "encrypted-media"});
+           // $(".youtube-video").append(youtubeVideo);
+       });
+       $("#submit1").on("click", function(event) {
+        event.preventDefault();
+            team1=$("#query1").val().trim();
+            team2=$("#query2").val().trim();  
+            console.log("team1 "+team1) ;
+            console.log("team2 "+team2) ;
+            myfunction(); 
+            onYouTubeIframeAPIReady(team1,team2);
 
+        $(".video-form").hide();
+       });
+        
+    });// closes Submit Button click
+////////////
+function myfunction(){
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+   
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+     return;
+}
 
-    }); // closes Submit Button click
+function onYouTubeIframeAPIReady(team1,team2) {   
+    $.get("https://www.googleapis.com/youtube/v3/search", {
+            part : 'snippet',
+            maxResults:2,
+            publishedAfter: "2017-01-01T00:00:00Z",
+            q: team1+"+"+team2+"+"+"highlights",
+            d : 'UCR5wZcXtOUka8jTA57flzMg', // You can get one from Advanced settings on YouTube
+            type : 'video',
+            key: 'AIzaSyCxS4ovWHfBKNva2sRRLOk8LadqRSUKM14'
+        },//get end
+
+        function(data,videoId) {
+    
+            console.log("ayna "+data);
+            player = new YT.Player('player', {
+                height: '300',
+                width: '440',
+                videoId: data.items[0].id.videoId,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }//event object end
+            });//player end
+            console.log("data"+data.items[0].id.videoId);
+        }//function (data) end
+    );//get end    
+
+    return(team1,team2);
+
+}//function onyoutubeIframeAPIReady end
+
+//  The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+event.target.stopVideo();
+}
+
+//  The API calls this function when the player's state changes.
+//    The function indicates that when playing a video (state=1),
+//    the player should play for six seconds and then stop.
+var done = false;
+function onPlayerStateChange(event) {
+if (event.data == YT.PlayerState.PLAYING && !done) {
+    //setTimeout(stopVideo, 6000);
+    done = true;
+}
+}
+function stopVideo() {
+player.stopVideo();
+}
+//////////
+     
 
     //league button selected 
     $('body').on('click','.league-button',function() {
@@ -195,9 +268,6 @@ $(document).ready(function () {
         //var youtubeVideo = $("<div>");
         //youtubeVideo.attr("src","https://www.youtube.com/embed/J15vfXqnwWw");
     });
-
-    
-
 
 
     var oddsUrlDate = moment().format("YYYY-MM-DD");
@@ -238,8 +308,6 @@ var matchIdArray = []
 for (var n=0; n < 3; n++) {
     
 }
-
-
 
 
 
