@@ -1,6 +1,4 @@
 
-
-
 body {
     background: url(../images/football-pitch.jpg) no-repeat center center fixed;
     background-size: cover;
@@ -24,17 +22,21 @@ img {
     margin-top: 1%;
     width: auto;
     height: 100%;
-    border: 1px solid red;
+    border: 1px solid rgb(3, 2, 2);
 }
 img3 {
     margin: auto;
     width: auto;
     height: 100%;
+   
+}
+.greenLogo {
+margin-top: 3%;
 }
 
 p2 {
     margin: auto;
-    margin-top: 5%;
+    margin-top: 10%;
     display: block;
     width: 75%;
     padding: 10px;
@@ -98,12 +100,14 @@ p444 {
     border-radius: 50%;
     background: red;
     cursor: pointer;
+    
 }
 .start, .age-check {
     margin: auto;
     text-align: center;
     padding-left: 0px;
   font-size: 20px;
+  color: #b24327;
   margin-top: 5%;
 }
 .title {
@@ -116,6 +120,6 @@ p444 {
 .row {
     position: relative;
 }
-
-
-
+#leagues-here{
+    padding:80px;
+}
