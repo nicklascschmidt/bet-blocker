@@ -120,7 +120,11 @@ p444 {
 .row {
     position: relative;
 }
+
 #leagues-here{
     padding:80px;
+}
+.display {
+    display: none;
 }
 
