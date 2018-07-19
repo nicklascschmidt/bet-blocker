@@ -232,6 +232,9 @@ p444 {
 .row {
     position: relative;
 }
+.display {
+    display: none;
+}
 
 
 
