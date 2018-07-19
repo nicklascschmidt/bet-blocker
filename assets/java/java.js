@@ -1,4 +1,14 @@
 
+<<<<<<< HEAD
+
+var testURL = "https://apifootball.com/api/?action=get_odds&APIkey=" + apiKey + "&match_id=297289";
+
+var myEventID = "25861179737";
+var myLeagueID = "20336";
+var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
+var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
+=======
+>>>>>>> d6899775787b4da84ea0e770b905f121ad809888
 
 var gameArray = [];
 var gameArrayObjects = [];
@@ -81,9 +91,14 @@ var currentGameNum = 0;
         console.log(randomNum);
         gameArrayFinal.push(gameArrayObjects[randomNum]);
     }
+<<<<<<< HEAD
+    console.log(gameArrayFinal);
+
+=======
         console.log(gameArrayFinal);
         generateGameId();
         console.log(gameIdArray);
+>>>>>>> d6899775787b4da84ea0e770b905f121ad809888
 
 });
 
@@ -212,6 +227,17 @@ $(document).ready(function () {
 
 
 
+
+var currentGameID;
+var currentGameNum  = 0;
+var currentGameObject = gameArrayFinal[currentGameNum];
+var currentGameID = currentGameObject.id;
+
+var matchIdArray = []
+
+for (var n=0; n < 3; n++) {
+    
+}
 
 
 
