@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,11 +16,13 @@
 </head>
 
 <body>
-    
+<br> 
+        <img src="assets/images/titleBanner.png"class="greenLogo">
+        
     <div class="age-check">
         <label for="datep"><b>DOB (MM/DD/YYYY):</b></label>
         <br><br>
-        <input type="text" id="age-input" >
+        <input type="text" id="age-input" placeholder="Type Age">
         <br>
         <input type="submit" class="w3-button w3-xlarge w3-circle w3-red w3-card-4 " id="submit" value="submit">
     </div>
@@ -33,8 +34,16 @@
     </div>
     <div id="confirm"class="display">
 
-    <div class="youtube-video">
-        <iframe width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    
+    <!-- input from team-name function this is place holder form-->
+    <div class="video-form">
+            
+     </div>
+     <div id="youtube-display">
+        <div class="youtube-video">
+                <div id="player"></div>
+            <!-- <iframe width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+        </div>
     </div>
 
     <div id="BB4">
@@ -49,7 +58,7 @@
 
         <p444>Estimate the Spread</p444>
         <div class="slidecontainer">
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <input type="range" min="-3" max="3" step=".5"value="0" class="slider" id="myRange">
             <p>Value: <span id="demo"></span></p>
         </div>
         <br>
@@ -76,8 +85,3 @@
    
  </body>
 </html>
-
-
-
-
-
