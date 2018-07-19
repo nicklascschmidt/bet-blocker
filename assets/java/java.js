@@ -141,8 +141,11 @@ $(document).ready(function () {
     // $("#BB5").hide();
     $("#player").hide();
     $(".slidecontainer").hide();
+    $(".slider-container").hide();
     // $(".video-form").hide();
-    $("#search-term").hide();
+    $(".button").hide();
+    $(".btn-group").hide();
+    $(".final-page").hide();
     // setTimeout(function() {$(".container1").show(1000),$("#title").css({"height":"100px","width":"100%"})},2000)
     $("#submit").on("click",function() {
        
@@ -184,22 +187,34 @@ $(document).ready(function () {
            // var youtubeVideo = $("<iframe>");
            // youtubeVideo.attr("src","https://www.youtube.com/embed/J15vfXqnwWw").css({"width":"500px","height":"300px","autoplay": "encrypted-media"});
            // $(".youtube-video").append(youtubeVideo);
-       });
-       $("#submit1").on("click", function(event) {
-        $("#player").show();
-        event.preventDefault();
-            team1=$("#query1").val().trim();
-            team2=$("#query2").val().trim();  
-            console.log("team1 "+team1) ;
-            console.log("team2 "+team2) ;
-            myfunction(); 
-            onYouTubeIframeAPIReady(team1,team2);
+           
+           $(".slidecontainer").show();
+           $(".slider-container").show();
+           $(".btn-group").show();
+           $(".button").show();
+           $("#player").show();
+              var everton, arsenal;
+   
+               myfunction(); 
+               onYouTubeIframeAPIReady(everton,arsenal);
+        });
+      
+        $(".button").on("click",function(){
+            $(".slidecontainer").hide();
+           $(".slider-container").hide();
+           $(".btn-group").hide();
+           $(".button").hide();
+           $("#player").hide();
+          $(".final-page").show();
+        });
 
         
-       });
+       
         
     });// closes Submit Button click
 ////////////
+
+        
 function myfunction(){
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
