@@ -123,35 +123,12 @@ p444 {
     position: relative;
 }
 
-body {
-    background: url(../images/football-pitch.jpg) no-repeat center center fixed;
-    background-size: cover;
-    height: 100%;
-    overflow: scroll;
-    text-align: center;
-    margin: auto;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
+#leagues-here{
+    padding:80px;
+
 }
-.w3-button {
-    margin: auto;
-    margin-top: 1.5%;
-  display: block;
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-}
-img {
-    margin: auto;
-    margin-top: 1%;
-    width: auto;
-    height: 100%;
-    border: 1px solid red;
-}
-img3 {
-    margin: auto;
-    width: auto;
-    height: 100%;
+.display {
+    display: none;
 }
 
 p2 {
