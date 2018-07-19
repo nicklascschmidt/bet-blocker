@@ -279,16 +279,40 @@ player.stopVideo();
      
 
     //league button selected 
-    var slider = document.getElementById("myRange");
-     var output = document.getElementById("demo");
-     output.innerHTML = slider.value;
-     
-     slider.oninput = function() {
-       output.innerHTML = this.value;
-     }
-    
-      
-}); // closes Doc.ready
+    $('body').on('click','.league-button',function() {
+
+        $("#league-display").hide();
+        // show next page
+
+        //var youtubeVideo = $("<div>");
+        //youtubeVideo.attr("src","https://www.youtube.com/embed/J15vfXqnwWw");
+    });
+
+
+    var oddsUrlDate = moment().format("YYYY-MM-DD");
+    var oddUrl = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/" + oddsUrlDate;
+    console.log(oddsUrlDate);
+
+    $("#next").on("click", function() {
+        // do stuff
+        currentGameNum++;
+        var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
+
+    $.ajax({
+        url: mashapeEventURL,
+        method: "GET",
+        headers: {
+            "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
+            }
+      }).then(function(response) {
+          console.log("stuff");
+          gameResponse = response;
+          getTeamNames();
+          console.log(gameResponse);
+      })       
+    });
+ }); // closes Doc.ready
+
 
 
 
