@@ -1,21 +1,9 @@
 
-var startDate = "2017-02-13";
-var endDate = "2017-02-13";
-var apiKey = "bdca922fc5166acd71413f149462c1a2a01766f862a8cbcb93de2b1cd79df47d";
-var oddsURL = "https://apifootball.com/api/?action=get_odds&from=" + startDate + "&to=" + endDate + "&APIkey=" + apiKey;
-var headToHeadURL = "https://apifootball.com/api/?action=get_H2H&firstTeam=Chelsea&secondTeam=Arsenal&APIkey=" + apiKey;
-
-var testURL = "https://apifootball.com/api/?action=get_odds&APIkey=" + apiKey + "&match_id=297289";
-
-var myEventID = "25861179737";
-var myLeagueID = "20336";
-var mashapeURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/2018-07-12";
-var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
-var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
 
 var gameArray = [];
 var gameArrayObjects = [];
 var gameArrayFinal = [];
+var gameIdArray = [];
 var foundGame = null;
 var leagueIdArray = ["20406","20470","20335","20322","20358","20333","20370","20336","20334","20372"];
 var leagueImageArray = [
@@ -31,31 +19,38 @@ var leagueImageArray = [
     "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Superliga_2010.svg/1200px-Superliga_2010.svg.png"]
 
 var leagueObjectArray = [];
-
+var myLeagueID = "20406";
+var mashapeLeagueURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/league/" + myLeagueID;
 var mashapeLeagueListURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/leagues";
 
+var gameResponse;
+var myEventID;
+var currentGameNum = 0;
+        
+        function getTeamNames() {
+            $("#team1").text(gameResponse[myEventID].home.name);
+            $("#team2").text(gameResponse[myEventID].away.name);      
+          }
+        function generateGameId() {
+            for(n=0; n<3; n++) {
+                var currentGameObject = gameArrayFinal[n];
+                var currentGameId = currentGameObject.id;
+                gameIdArray.push(currentGameId);
+            }
+            myEventID= gameIdArray[currentGameNum];
+            console.log("some");
+            console.log(myEventID);
+        }
 
 
-// var result;
-// function pickRandomProperty(obj) {
-//     var count = 0;
-//     for (var prop in obj)
-//         if (Math.random() < 1/++count)
-//         result = prop;
-//     return result;
-// }
+    $.ajax({
+        url: mashapeLeagueURL,
+        method: "GET",
+        headers: {
+        "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
+        }
+    }).then(function(response) {
 
-
-$.ajax({
-    url: mashapeLeagueURL,
-    method: "GET",
-    headers: {
-    "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
-    }
-}).then(function(response) {
-
-    console.log(response);
-    console.log(response);
     console.log(Object.values(response));
     var responseArray = Object.values(response);
 
@@ -86,7 +81,11 @@ $.ajax({
         console.log(randomNum);
         gameArrayFinal.push(gameArrayObjects[randomNum]);
     }
-    console.log(gameArrayFinal);
+
+        console.log(gameArrayFinal);
+        generateGameId();
+        console.log(gameIdArray);
+
 });
 
 // Generates the list of leagues using hardcoded IDs
@@ -261,14 +260,54 @@ player.stopVideo();
      
 
     //league button selected 
+    $('body').on('click','.league-button',function() {
+
+        $("#league-display").hide();
+        // show next page
+
+        //var youtubeVideo = $("<div>");
+        //youtubeVideo.attr("src","https://www.youtube.com/embed/J15vfXqnwWw");
+    });
+
+
+    var oddsUrlDate = moment().format("YYYY-MM-DD");
+    var oddUrl = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/events/" + oddsUrlDate;
+    console.log(oddsUrlDate);
+
+    $("#next").on("click", function() {
+        // do stuff
+        currentGameNum++;
+        var mashapeEventURL = "https://bettingodds-bettingoddsapi-v1.p.mashape.com/event/" + myEventID;
+
+    $.ajax({
+        url: mashapeEventURL,
+        method: "GET",
+        headers: {
+            "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
+            }
+      }).then(function(response) {
+          console.log("stuff");
+          gameResponse = response;
+          getTeamNames();
+          console.log(gameResponse);
+      })       
+    });
+ }); // closes Doc.ready
+
+
+
+
+
+var currentGameID;
+var currentGameNum  = 0;
+var currentGameObject = gameArrayFinal[currentGameNum];
+var currentGameID = currentGameObject.id;
+
+var matchIdArray = []
+
+for (var n=0; n < 3; n++) {
     
-    
-      
-}); // closes Doc.ready
-
-
-
-
+}
 
 
 
@@ -280,7 +319,6 @@ var slider = document.getElementById("myRange");
   slider.oninput = function() {
     output.innerHTML = this.value;
   }
-
 
 
 
