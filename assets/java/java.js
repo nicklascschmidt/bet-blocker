@@ -56,7 +56,6 @@ $(document).ready(function () {
                
                 homeTeam =gameResponse[myEventID].home.name;
                 awayTeam = gameResponse[myEventID].away.name;
-                console.log(homeTeam);
                 $("#team1").text(homeTeam).css({"color":" rgb(66, 126, 216)","font-size":"20px"});
                 $("#team2").text(awayTeam).css({"color":" rgb(66, 126, 216)","font-size":"20px"});      
               return;
@@ -99,43 +98,51 @@ $(document).ready(function () {
                     
                 })  
             }
-        $.ajax({
-            url: mashapeLeagueURL,
-            method: "GET",
-            headers: {
-            "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
-            }
-        }).then(function(response) {
-        console.log(Object.values(response));
-        var responseArray = Object.values(response);
-        for (var n=0; n < responseArray.length; n++) {
-            var gameText = responseArray[n].away.name + responseArray[n].home.name + responseArray[n].datetime.value;
-            for (var m=-1; m < gameArray.length; m++) {
-                if (gameText === gameArray[m]) {
-                    console.log("duplicate found");
-                    foundGame = true;
-                }
-            }
-            if (foundGame !== true) {
-                gameArray.push(gameText);
-                gameArrayObjects.push(responseArray[n]);
-            }
-            foundGame = null;
-        }
-        console.log(gameArrayObjects);
-        for (var n=0; n < 3; n++) {
-            var randomNum = Math.floor(Math.random() * gameArrayObjects.length);
-            console.log(randomNum);
-            gameArrayFinal.push(gameArrayObjects[randomNum]);
-        }
-            console.log(gameArrayFinal);
-            generateGameId();
-            console.log("GameIdArray");
-            nameCall();
-            videoDisplay();
-            console.log(gameIdArray);
+
+            function getLeagueURL() {
             
-    });
+                $.ajax({
+                    url: mashapeLeagueURL,
+                    method: "GET",
+                    headers: {
+                    "X-Mashape-Key": "WQSDOtC0d2msh4drUXOK9uJAyRf8p1CBBJRjsnvXZGXdLnmhAi"
+                    }
+                }).then(function(response) {
+                    console.log(Object.values(response));
+                    var responseArray = Object.values(response);
+                    for (var n=0; n < responseArray.length; n++) {
+                        var gameText = responseArray[n].away.name + responseArray[n].home.name + responseArray[n].datetime.value;
+                        for (var m=-1; m < gameArray.length; m++) {
+                            if (gameText === gameArray[m]) {
+                                console.log("duplicate found");
+                                foundGame = true;
+                            }
+                        }
+                        if (foundGame !== true) {
+                            gameArray.push(gameText);
+                            gameArrayObjects.push(responseArray[n]);
+                        }
+                        foundGame = null;
+                    }
+                    console.log(gameArrayObjects);
+                    for (var n=0; n < 3; n++) {
+                        var randomNum = Math.floor(Math.random() * gameArrayObjects.length);
+                        console.log(randomNum);
+                        gameArrayFinal.push(gameArrayObjects[randomNum]);
+                    }
+                    console.log("gameArrayFinal");
+                    console.log(gameArrayFinal);
+                    generateGameId();
+                    console.log("GameIdArray");
+                    nameCall();
+                    videoDisplay();
+                    console.log(gameIdArray);
+                    
+                }); // closes ajax
+            }
+            getLeagueURL();
+            
+
     // Generates the list of leagues using hardcoded IDs
     function getLeagues() {
         $.ajax({
@@ -163,6 +170,7 @@ $(document).ready(function () {
                 var $leagueDiv = $("<div>");
                 $leagueDiv.addClass("league-button");
                 $leagueDiv.attr("style","text-align: center;display: inline-block;padding: 5px;margin: 10px");
+                $leagueDiv.attr("data-leagueNum",n);
                 $leagueDiv.css({"width":"20%","height":"15%"});
                 $leagueDiv.append($leagueImage);
                 $leagueDiv.append("<br>");
@@ -207,6 +215,12 @@ $(document).ready(function () {
             
             
             $('#league-display').on('click','.league-button',function() {
+
+                // changes myLeagueID to whichever league was clicked
+                var leagueNumber = $(this).attr("data-leagueNum");
+                myLeagueID = leagueIdArray[leagueNumber];
+
+                getLeagueURL();
                 
                 $("#league-display").hide();
                 
@@ -216,7 +230,7 @@ $(document).ready(function () {
                 nextGame();
                 getTeamNames();
                 console.log("team names");
-                videoDisplay();//both myfunction and onyoube
+                videoDisplay();//both myfunction and youtube
                 
                 
            });
